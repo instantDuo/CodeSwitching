@@ -1,5 +1,7 @@
 package com.instantduo.codeswitching.common.type;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.instantduo.codeswitching.common.exception.CustomException;
 import com.instantduo.codeswitching.common.exception.ErrorCode;
 
@@ -18,6 +20,7 @@ public enum Language {
         this.str = str;
     }
 
+    @JsonCreator
     public Language inputToEnum(String input){
         return switch (input){
             case "kor" -> KOR;
@@ -27,5 +30,10 @@ public enum Language {
             case "chn" -> CHN;
             default -> throw new CustomException(ErrorCode.INVALID_LANGUAGE);
         };
+    }
+
+    @JsonValue
+    public String getInput(){
+        return input;
     }
 }

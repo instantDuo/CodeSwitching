@@ -1,5 +1,7 @@
 package com.instantduo.codeswitching.common.type;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.instantduo.codeswitching.common.exception.CustomException;
 import com.instantduo.codeswitching.common.exception.ErrorCode;
 
@@ -16,11 +18,17 @@ public enum Gender{
     }
 
 
+    @JsonCreator
     public Gender inputToEnum(String input){
         return switch (input){
             case "male" -> MALE;
             case "female" -> FEMALE;
             default -> throw new CustomException(ErrorCode.INVALID_GENDER);
         };
+    }
+
+    @JsonValue
+    public String getInput(){
+        return input;
     }
 }

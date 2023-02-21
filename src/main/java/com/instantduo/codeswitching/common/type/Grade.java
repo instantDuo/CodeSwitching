@@ -1,16 +1,18 @@
 package com.instantduo.codeswitching.common.type;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.instantduo.codeswitching.common.exception.CustomException;
 import com.instantduo.codeswitching.common.exception.ErrorCode;
 
 public enum Grade{
-    COLLEGE("collge", "대졸"),
+    COLLEGE("college", "대졸"),
     HIGH_SCHOOL("high_school", "고졸"),
     MIDDLE_SCHOOL("middle_school", "중졸"),
     PRIMARY_SCHOOL("primary_school", "초졸");
 
-    String input;
-    String str;
+    final String input;
+    final String str;
 
     Grade(String input, String str) {
         this.input = input;
@@ -18,6 +20,7 @@ public enum Grade{
     }
 
 
+    @JsonCreator
     public Grade inputToEnum(String input){
         return switch (input){
             case "college" -> COLLEGE;
@@ -26,5 +29,10 @@ public enum Grade{
             case "primary_school" -> PRIMARY_SCHOOL;
             default -> throw new CustomException(ErrorCode.INVALID_GRADE);
         };
+    }
+
+    @JsonValue
+    public String getInput(){
+        return input;
     }
 }
