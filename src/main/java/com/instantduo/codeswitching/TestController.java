@@ -34,5 +34,13 @@ public class TestController {
         return new ResponseEntity<ResponseMessage>(new ResponseMessage("회원가입이 완료되었습니다.", 200), HttpStatus.OK);
     }
 
+    @PostMapping("/user/login")
+    public ResponseEntity login(@RequestBody LoginRequest loginRequest){
+        if(!loginRequest.getLoginId().equals("test123")||!loginRequest.getPassword().equals("qwer1234")){
+            throw new CustomException(ErrorCode.NOT_FOUND_USER);
+        }
+        return new ResponseEntity(new ResponseMessage<>("로그인이 완료되었습니다.", 400), HttpStatus.OK);
+    }
+
 
 }
