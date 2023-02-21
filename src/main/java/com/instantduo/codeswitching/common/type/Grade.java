@@ -21,7 +21,7 @@ public enum Grade{
 
 
     @JsonCreator
-    public Grade inputToEnum(String input){
+    public static Grade inputToEnum(String input){
         return switch (input){
             case "college" -> COLLEGE;
             case "high_school" -> HIGH_SCHOOL;
@@ -31,8 +31,4 @@ public enum Grade{
         };
     }
 
-    @JsonValue
-    public String getInput(){
-        return input;
-    }
 }

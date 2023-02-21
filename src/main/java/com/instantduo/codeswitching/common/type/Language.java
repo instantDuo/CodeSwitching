@@ -21,7 +21,7 @@ public enum Language {
     }
 
     @JsonCreator
-    public Language inputToEnum(String input){
+    public static Language inputToEnum(String input){
         return switch (input){
             case "kor" -> KOR;
             case "eng" -> ENG;
@@ -32,8 +32,4 @@ public enum Language {
         };
     }
 
-    @JsonValue
-    public String getInput(){
-        return input;
-    }
 }

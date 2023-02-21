@@ -11,7 +11,8 @@ public enum ErrorCode {
     INVALID_GRADE("학력을 확인해주세요.", 400),
     INVALID_COLOR("색깔을 확인해주세요.", 400),
     INVALID_GENDER("성별을 확인해주세요.", 400),
-    INVALID_LANGUAGE("언어를 확인해주세요.", 400);
+    INVALID_LANGUAGE("언어를 확인해주세요.", 400),
+    NOT_MATCHING_PASSWORD("비밀번호가 일치하지 않습니다.", 400);
 
 
     private final String msg;

@@ -19,7 +19,7 @@ public enum Gender{
 
 
     @JsonCreator
-    public Gender inputToEnum(String input){
+    public static Gender inputToEnum(String input){
         return switch (input){
             case "male" -> MALE;
             case "female" -> FEMALE;
@@ -27,8 +27,6 @@ public enum Gender{
         };
     }
 
-    @JsonValue
-    public String getInput(){
-        return input;
-    }
+
+
 }
