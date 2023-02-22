@@ -68,6 +68,13 @@ public class TestController {
         return new ResponseEntity(response, HttpStatus.OK);
     }
 
+    @PostMapping("/n-back/end/{gameId}")
+    public ResponseEntity createNBackPlayData(@PathVariable Long gameId, @RequestBody List<NBackPlayRequest> request){
+
+        ResponseMessage responseMessage = new ResponseMessage("게임이 완료되었습니다.", 200, request);
+        return new ResponseEntity(responseMessage, HttpStatus.OK);
+    }
+
 
 
 
