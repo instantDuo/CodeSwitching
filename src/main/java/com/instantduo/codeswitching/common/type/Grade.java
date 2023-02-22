@@ -1,7 +1,6 @@
 package com.instantduo.codeswitching.common.type;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
 import com.instantduo.codeswitching.common.exception.CustomException;
 import com.instantduo.codeswitching.common.exception.ErrorCode;
 
@@ -12,11 +11,11 @@ public enum Grade{
     PRIMARY_SCHOOL("primary_school", "초졸");
 
     final String input;
-    final String str;
+    final String korStr;
 
-    Grade(String input, String str) {
+    Grade(String input, String korStr) {
         this.input = input;
-        this.str = str;
+        this.korStr = korStr;
     }
 
 

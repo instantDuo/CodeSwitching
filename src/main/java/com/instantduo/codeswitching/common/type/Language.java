@@ -1,7 +1,6 @@
 package com.instantduo.codeswitching.common.type;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
 import com.instantduo.codeswitching.common.exception.CustomException;
 import com.instantduo.codeswitching.common.exception.ErrorCode;
 
@@ -13,11 +12,11 @@ public enum Language {
     CHN("chn","중국어");
 
     final String input;
-    final String str;
+    final String korStr;
 
-    Language(String input, String str) {
+    Language(String input, String korStr) {
         this.input = input;
-        this.str = str;
+        this.korStr = korStr;
     }
 
     @JsonCreator

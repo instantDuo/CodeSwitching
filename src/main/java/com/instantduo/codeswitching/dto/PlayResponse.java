@@ -7,7 +7,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @Getter
-public class NBackPlayResponse {
+public class PlayResponse {
     private Long gameId;
     private List<GamePlayDataResponse> gameData;
 }

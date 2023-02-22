@@ -1,7 +1,6 @@
 package com.instantduo.codeswitching.common.type;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
 import com.instantduo.codeswitching.common.exception.CustomException;
 import com.instantduo.codeswitching.common.exception.ErrorCode;
 
@@ -10,11 +9,11 @@ public enum Gender{
     FEMALE("female", "여성");
 
     final String input;
-    final String str;
+    final String korStr;
 
-    Gender(String input, String str) {
+    Gender(String input, String korStr) {
         this.input = input;
-        this.str = str;
+        this.korStr = korStr;
     }
 
 

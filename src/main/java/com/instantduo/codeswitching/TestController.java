@@ -4,6 +4,7 @@ import com.instantduo.codeswitching.common.ResponseMessage;
 import com.instantduo.codeswitching.common.exception.CustomException;
 import com.instantduo.codeswitching.common.exception.ErrorCode;
 import com.instantduo.codeswitching.common.type.Language;
+import com.instantduo.codeswitching.common.type.StroopColor;
 import com.instantduo.codeswitching.dto.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -64,8 +65,9 @@ public class TestController {
             }
         }
 
-        NBackPlayResponse response = new NBackPlayResponse(1L, playData);
-        return new ResponseEntity(response, HttpStatus.OK);
+        PlayResponse response = new PlayResponse(1L, playData);
+        ResponseMessage responseMessage = new ResponseMessage("문제 출제가 완료되었습니다.", 200, response);
+        return new ResponseEntity(responseMessage, HttpStatus.OK);
     }
 
     @PostMapping("/n-back/end/{gameId}")
@@ -76,7 +78,7 @@ public class TestController {
     }
 
     @GetMapping("/n-back/end/{gameId}")
-    public ResponseEntity getResult(@PathVariable Long gameId){
+    public ResponseEntity getNBackResult(@PathVariable Long gameId){
 
         List<MyRankResponse> rankResponses = new ArrayList<>();
         rankResponses.add(new MyRankResponse(97, 102L));
@@ -91,6 +93,35 @@ public class TestController {
         return new ResponseEntity(responseMessage, HttpStatus.OK);
     }
 
+    @GetMapping("/stroop/play")
+    public ResponseEntity getStroopPlayData(Language language1, Language language2, String subject, Integer level){
+        List<List<String>> question = new ArrayList<>();
+        question.add(Arrays.asList("교실", "classroom"));
+        question.add(Arrays.asList("책상", "desk"));
+        question.add(Arrays.asList("의자", "chair"));
+        question.add(Arrays.asList("사물함", "locker"));
+        question.add(Arrays.asList("칠판", "whiteboard"));
+        List<GamePlayDataResponse> playData = new ArrayList<>();
 
+        List<StroopColor> colorList = Arrays.asList(StroopColor.RED, StroopColor.GREEN, StroopColor.BLUE, StroopColor.YELLOW);
+
+        Random random = new Random();
+
+        int randomIndex;
+        StroopColor randomColor;
+
+        for(int i = 0; i < 20; i++){
+            randomColor = colorList.get(random.nextInt(4));
+            randomIndex = random.nextInt(question.size());
+            GamePlayDataResponse data = new GamePlayDataResponse(randomColor.getKorStr() + " " + question.get(randomIndex).get(random.nextInt(2)), colorList.get(random.nextInt(4)).getInput(), randomColor.getInput());
+            playData.add(data);
+        }
+
+        PlayResponse response = new PlayResponse(1L, playData);
+
+
+        ResponseMessage responseMessage = new ResponseMessage("문제 출제가 완료되었습니다.", 200, response);
+        return new ResponseEntity(responseMessage, HttpStatus.OK);
+    }
 
 }
