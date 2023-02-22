@@ -75,7 +75,21 @@ public class TestController {
         return new ResponseEntity(responseMessage, HttpStatus.OK);
     }
 
+    @GetMapping("/n-back/end/{gameId}")
+    public ResponseEntity getResult(@PathVariable Long gameId){
 
+        List<MyRankResponse> rankResponses = new ArrayList<>();
+        rankResponses.add(new MyRankResponse(97, 102L));
+        rankResponses.add(new MyRankResponse(92, 104L));
+        rankResponses.add(new MyRankResponse(86, 106L));
+        rankResponses.add(new MyRankResponse(84, 101L));
+        rankResponses.add(new MyRankResponse(42, 50L));
+
+        GameResultResponse response = new GameResultResponse(97, 102L, rankResponses);
+
+        ResponseMessage responseMessage = new ResponseMessage("결과 반환이 완료되었습니다.", 200, response);
+        return new ResponseEntity(responseMessage, HttpStatus.OK);
+    }
 
 
 
