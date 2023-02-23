@@ -172,4 +172,12 @@ public class TestController {
         return new ResponseEntity(responseMessage, HttpStatus.OK);
     }
 
+
+    @GetMapping("/user/playdata")
+    public ResponseEntity getUserPlayData(@RequestHeader(name = "Authorization") String token){
+        UserPlayDataResponse response = new UserPlayDataResponse("test123", 4, 103, 14, 31, 0);
+        ResponseMessage responseMessage = new ResponseMessage("유저 정보 반환", 200, response);
+        return new ResponseEntity(responseMessage, HttpStatus.OK);
+    }
+
 }
