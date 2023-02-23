@@ -3,7 +3,7 @@ package com.instantduo.codeswitching.dto;
 import lombok.Getter;
 
 @Getter
-public class NBackPlayRequest {
+public class PlayRequest {
     private String response;
     private Long requiredTime;
 }
