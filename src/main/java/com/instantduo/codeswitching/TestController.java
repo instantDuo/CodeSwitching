@@ -7,6 +7,7 @@ import com.instantduo.codeswitching.common.type.Language;
 import com.instantduo.codeswitching.common.type.StroopColor;
 import com.instantduo.codeswitching.dto.*;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ResponseHeader;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -42,8 +43,8 @@ public class TestController {
         if(!loginRequest.getLoginId().equals("test123")||!loginRequest.getPassword().equals("qwer1234")){
             throw new CustomException(ErrorCode.NOT_FOUND_USER);
         }
-        Cookie cookie = new Cookie("JWT", URLEncoder.encode(token, "utf-8"));
-        response.addCookie(cookie);
+
+        response.setHeader("Authorization", token);
 
         return new ResponseEntity(new ResponseMessage<>("로그인이 완료되었습니다.", 400), HttpStatus.OK);
     }
@@ -166,8 +167,8 @@ public class TestController {
     }
 
     @GetMapping("/user/cookie")
-    public ResponseEntity cookieCheck(@CookieValue(name = "JWT") String cookie){
-        ResponseMessage responseMessage = new ResponseMessage("쿠키 반환", 200, cookie);
+    public ResponseEntity cookieCheck(@RequestHeader(name = "Authorization") String token){
+        ResponseMessage responseMessage = new ResponseMessage("쿠키 반환", 200, token);
         return new ResponseEntity(responseMessage, HttpStatus.OK);
     }
 
