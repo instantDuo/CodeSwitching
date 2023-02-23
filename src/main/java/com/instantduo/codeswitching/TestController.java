@@ -11,7 +11,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -20,6 +25,7 @@ import java.util.Random;
 @RestController
 @RequestMapping("/api")
 public class TestController {
+    private final String token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyNjEyNzYzMjM2IiwiZXhwIjoxNjczMDgyNzQxLCJpYXQiOjE2NzMwNzkxNDF9.1Kg0qV-Eh0Z8E83YrsS3B8gW46aMYzi7bJ9VltpAAiE";
 
     @PostMapping("/user/signup")
     @ApiOperation(value = "회원가입")
@@ -32,10 +38,13 @@ public class TestController {
 
     @PostMapping("/user/login")
     @ApiOperation(value = "로그인")
-    public ResponseEntity login(@RequestBody LoginRequest loginRequest){
+    public ResponseEntity login(@RequestBody LoginRequest loginRequest, HttpServletResponse response) throws UnsupportedEncodingException {
         if(!loginRequest.getLoginId().equals("test123")||!loginRequest.getPassword().equals("qwer1234")){
             throw new CustomException(ErrorCode.NOT_FOUND_USER);
         }
+        Cookie cookie = new Cookie("JWT", URLEncoder.encode(token, "utf-8"));
+        response.addCookie(cookie);
+
         return new ResponseEntity(new ResponseMessage<>("로그인이 완료되었습니다.", 400), HttpStatus.OK);
     }
 
@@ -153,6 +162,12 @@ public class TestController {
         GameResultResponse response = new GameResultResponse(97, 102L, rankResponses);
 
         ResponseMessage responseMessage = new ResponseMessage("결과 반환이 완료되었습니다.", 200, response);
+        return new ResponseEntity(responseMessage, HttpStatus.OK);
+    }
+
+    @GetMapping("/user/cookie")
+    public ResponseEntity cookieCheck(@CookieValue(name = "JWT") String cookie){
+        ResponseMessage responseMessage = new ResponseMessage("쿠키 반환", 200, cookie);
         return new ResponseEntity(responseMessage, HttpStatus.OK);
     }
 
