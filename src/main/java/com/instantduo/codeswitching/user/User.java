@@ -5,12 +5,14 @@ import com.instantduo.codeswitching.common.type.Gender;
 import com.instantduo.codeswitching.common.type.Grade;
 import com.instantduo.codeswitching.common.type.Language;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @NoArgsConstructor
+@Getter
 @Table(name = "Users")
 public class User {
     @Id
