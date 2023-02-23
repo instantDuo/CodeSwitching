@@ -1,14 +1,11 @@
-package com.instantduo.codeswitching.dto;
+package com.instantduo.codeswitching.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.util.List;
-
 @AllArgsConstructor
 @Getter
-public class GameResultResponse {
+public class MyRankResponse {
     private Integer correctRate;
     private Long totalTime;
-    private List<MyRankResponse> myRank;
 }

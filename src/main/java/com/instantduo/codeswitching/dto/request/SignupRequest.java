@@ -1,4 +1,4 @@
-package com.instantduo.codeswitching.dto;
+package com.instantduo.codeswitching.dto.request;
 
 import com.instantduo.codeswitching.common.type.Gender;
 import com.instantduo.codeswitching.common.type.Grade;
@@ -20,7 +20,7 @@ public class SignupRequest {
     private String loginId;
 
     @NotNull( message = "비밀번호를 입력해주세요.")
-    @Pattern(regexp = "(?=.*[0-9])(?=.*[a-zA-Z]).{8,16}" , message = "비밀번호는 대소문자 영어, 숫자를 포함한 4~16자리여야 합니다.")
+    @Pattern(regexp = "(?=.*[0-9])(?=.*[a-zA-Z]).{8,16}" , message = "비밀번호는 대소문자 영어, 숫자를 포함한 8~16자리여야 합니다.")
     private String password;
 
     @NotNull( message = "비밀번호를 입력해주세요.")

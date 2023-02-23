@@ -1,4 +1,4 @@
-package com.instantduo.codeswitching.dto;
+package com.instantduo.codeswitching.dto.request;
 
 import lombok.Getter;
 

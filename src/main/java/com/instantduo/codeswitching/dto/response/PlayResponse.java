@@ -1,5 +1,6 @@
-package com.instantduo.codeswitching.dto;
+package com.instantduo.codeswitching.dto.response;
 
+import com.instantduo.codeswitching.dto.response.GamePlayDataResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
