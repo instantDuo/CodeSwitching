@@ -36,6 +36,7 @@ public class JwtUtil {
 
     private final SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
 
+    private final UserDetailsServiceImpl userDetailsServiceImpl;
 
     private static final long TOKEN_TIME = 24 * 60 * 60 * 1000L;
 
@@ -92,5 +93,9 @@ public class JwtUtil {
         return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
     }
 
+    public Authentication createAuthentication(String memberName) {
+        UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(memberName);     /* 이름을 통해 사용자 조회 */
+        return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities()); //userDetail 및 권한 넣어 생성
+    }
 
 }
