@@ -10,6 +10,6 @@ public class UserPlayDataResponse {
     private Integer nBackCount;
     private Integer stroopCount;
     private Integer matchingCount;
-    private Integer simonCounter;
-    private Integer complexCounter;
+    private Integer simonCount;
+    private Integer complexCount;
 }
