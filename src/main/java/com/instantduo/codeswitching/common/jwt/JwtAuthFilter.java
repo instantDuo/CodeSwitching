@@ -24,7 +24,7 @@ import java.util.List;
 public class JwtAuthFilter extends OncePerRequestFilter {
     private final JwtUtil jwtUtil;
     private static final List<String> EXCLUDE_URL =
-            List.of("/api/user", "/api/survey/main", "/reply", "/refresh");
+            List.of("/api/user/signup", "/api/user/login");
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException{
@@ -45,6 +45,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     }
 
     public void setAuthentication(String loginId) {
+        System.out.println(loginId);
         SecurityContext context = SecurityContextHolder.createEmptyContext();
         Authentication authentication = jwtUtil.createAuthentication(loginId);
         context.setAuthentication(authentication);

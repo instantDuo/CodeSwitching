@@ -1,7 +1,5 @@
 package com.instantduo.codeswitching.user;
 
-import com.instantduo.codeswitching.PlayData.PlayData;
-import com.instantduo.codeswitching.PlayData.PlayDataRepository;
 import com.instantduo.codeswitching.common.exception.CustomException;
 import com.instantduo.codeswitching.common.exception.ErrorCode;
 import com.instantduo.codeswitching.common.jwt.JwtUtil;
@@ -9,13 +7,13 @@ import com.instantduo.codeswitching.common.type.Game;
 import com.instantduo.codeswitching.common.type.Subject;
 import com.instantduo.codeswitching.dto.request.LoginRequest;
 import com.instantduo.codeswitching.dto.request.SignupRequest;
+import com.instantduo.codeswitching.dto.response.UserGamePlayResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.util.Pair;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -67,5 +65,22 @@ public class UserService {
         String token = jwtUtil.createToken(user.getLoginId());
 
         return Pair.of(JwtUtil.AUTHORIZATION_HEADER, token);
+    }
+
+    public UserGamePlayResponse getGamePlayData(User user) {
+        List<PlayData> playDataList =  playDataRepository.findAllByUser(user);
+        UserGamePlayResponse userGamePlayResponse = new UserGamePlayResponse(user.getLoginId(), 0, 0, 0, 0, 0);
+        for(PlayData playData : playDataList){
+            switch (playData.getGame()){
+                case N_BACK -> userGamePlayResponse.increaseNBack(playData.getCount());
+                case STROOP -> userGamePlayResponse.increaseStroop(playData.getCount());
+                case SIMON -> userGamePlayResponse.increaseSimon(playData.getCount());
+                case COMPLEX -> userGamePlayResponse.increaseComplex(playData.getCount());
+                case MATCHING-> userGamePlayResponse.increaseMatching(playData.getCount());
+            }
+        }
+
+        return userGamePlayResponse;
+
     }
 }

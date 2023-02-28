@@ -1,14 +1,16 @@
-package com.instantduo.codeswitching.PlayData;
+package com.instantduo.codeswitching.user;
 
 import com.instantduo.codeswitching.common.type.Game;
 import com.instantduo.codeswitching.common.type.Subject;
 import com.instantduo.codeswitching.user.User;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
+@Getter
 @NoArgsConstructor
 public class PlayData {
     @Id
