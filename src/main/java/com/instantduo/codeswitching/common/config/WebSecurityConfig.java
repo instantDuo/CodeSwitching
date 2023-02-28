@@ -43,11 +43,14 @@ public class WebSecurityConfig {
         http.csrf().disable()
                 .cors().configurationSource(corsConfigurationSource());
 
+        http.httpBasic().authenticationEntryPoint(authenticationEntryPoint());
+
 
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.authorizeRequests()
-                .antMatchers("/api/**").permitAll()
+                .antMatchers("/api/user/login").permitAll()
+                .antMatchers("/api/user/signup").permitAll()
                 /*swagger*/
                 .antMatchers("/v2/**").permitAll()
                 .antMatchers("/webjars/**").permitAll()

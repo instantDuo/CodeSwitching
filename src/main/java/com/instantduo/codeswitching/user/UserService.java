@@ -8,6 +8,7 @@ import com.instantduo.codeswitching.common.type.Subject;
 import com.instantduo.codeswitching.dto.request.LoginRequest;
 import com.instantduo.codeswitching.dto.request.SignupRequest;
 import com.instantduo.codeswitching.dto.response.UserGamePlayResponse;
+import com.instantduo.codeswitching.dto.response.UserSubjectPlayResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.util.Pair;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -81,6 +82,23 @@ public class UserService {
         }
 
         return userGamePlayResponse;
+
+    }
+
+    public UserSubjectPlayResponse getSubjectPlayData(User user) {
+        List<PlayData> playDataList =  playDataRepository.findAllByUser(user);
+        UserSubjectPlayResponse userSubjectPlayResponse = new UserSubjectPlayResponse(user.getLoginId(), 0, 0, 0, 0);
+        for(PlayData playData : playDataList){
+            switch (playData.getSubject()){
+                case SCHOOL -> userSubjectPlayResponse.increaseSchool(playData.getCount());
+                case KITCHEN -> userSubjectPlayResponse.increaseKitchen(playData.getCount());
+                case SPORTS -> userSubjectPlayResponse.increaseSports(playData.getCount());
+                case JOB_FAIR -> userSubjectPlayResponse.increaseJobFair(playData.getCount());
+            }
+        }
+
+        return userSubjectPlayResponse;
+
 
     }
 }

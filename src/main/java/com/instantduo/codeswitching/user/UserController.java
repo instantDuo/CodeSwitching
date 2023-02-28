@@ -2,10 +2,13 @@ package com.instantduo.codeswitching.user;
 
 
 import com.instantduo.codeswitching.common.ResponseMessage;
+import com.instantduo.codeswitching.common.exception.CustomException;
+import com.instantduo.codeswitching.common.exception.ErrorCode;
 import com.instantduo.codeswitching.common.security.UserDetailsImpl;
 import com.instantduo.codeswitching.dto.request.LoginRequest;
 import com.instantduo.codeswitching.dto.request.SignupRequest;
 import com.instantduo.codeswitching.dto.response.UserGamePlayResponse;
+import com.instantduo.codeswitching.dto.response.UserSubjectPlayResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.util.Pair;
 import org.springframework.http.HttpHeaders;
@@ -59,5 +62,18 @@ public class UserController {
         ResponseMessage<UserGamePlayResponse> message = new ResponseMessage<>("반환이 완료되었습니다.", 200, userGamePlayResponse);
         return new ResponseEntity<>(message, HttpStatus.valueOf(message.getStatusCode()));
     }
+
+    @GetMapping("/subject")
+    public ResponseEntity<ResponseMessage<UserSubjectPlayResponse>> getSubjectCount(@AuthenticationPrincipal UserDetailsImpl userDetails){
+        User user = userDetails.getUser();
+        if(user == null){
+            throw new CustomException(ErrorCode.NOT_LOGIN);
+        }
+        UserSubjectPlayResponse userSubjectPlayResponse = userService.getSubjectPlayData(user);
+
+        ResponseMessage<UserSubjectPlayResponse> message = new ResponseMessage<>("반환이 완료되었습니다.", 200, userSubjectPlayResponse);
+        return new ResponseEntity<>(message, HttpStatus.valueOf(message.getStatusCode()));
+    }
+
 
 }
