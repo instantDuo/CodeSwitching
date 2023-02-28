@@ -5,6 +5,7 @@ import com.instantduo.codeswitching.common.exception.CustomException;
 import com.instantduo.codeswitching.common.exception.ErrorCode;
 import com.instantduo.codeswitching.common.type.Language;
 import com.instantduo.codeswitching.common.type.StroopColor;
+import com.instantduo.codeswitching.common.type.Subject;
 import com.instantduo.codeswitching.dto.*;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ResponseHeader;
@@ -51,7 +52,7 @@ public class TestController {
 
     @GetMapping("/n-back/play")
     @ApiOperation(value = "NBack 게임 진행")
-    public ResponseEntity getNBackPlayData(Language language1, Language language2, String subject, Integer level){
+    public ResponseEntity getNBackPlayData(Language language1, Language language2, Subject subject, Integer level, @RequestHeader(name = "Authorization") String token){
 
         List<List<String>> question = new ArrayList<>();
         question.add(Arrays.asList("교실", "classroom"));
@@ -86,7 +87,7 @@ public class TestController {
 
     @PostMapping("/n-back/end/{gameId}")
     @ApiOperation(value = "NBack 게임 완료")
-    public ResponseEntity createNBackPlayData(@PathVariable Long gameId, @RequestBody List<PlayRequest> request){
+    public ResponseEntity createNBackPlayData(@PathVariable Long gameId, @RequestBody List<PlayRequest> request, @RequestHeader(name = "Authorization") String token){
 
         ResponseMessage responseMessage = new ResponseMessage("게임이 완료되었습니다.", 200, request);
         return new ResponseEntity(responseMessage, HttpStatus.OK);
@@ -94,7 +95,7 @@ public class TestController {
 
     @GetMapping("/n-back/end/{gameId}")
     @ApiOperation(value = "NBack 게임 종료")
-    public ResponseEntity getNBackResult(@PathVariable Long gameId){
+    public ResponseEntity getNBackResult(@PathVariable Long gameId, @RequestHeader(name = "Authorization") String token){
 
         List<MyRankResponse> rankResponses = new ArrayList<>();
         rankResponses.add(new MyRankResponse(97, 102L));
@@ -111,7 +112,7 @@ public class TestController {
 
     @GetMapping("/stroop/play")
     @ApiOperation(value = "Stroop게임 진행")
-    public ResponseEntity getStroopPlayData(Language language1, Language language2, String subject, Integer level){
+    public ResponseEntity getStroopPlayData(Language language1, Language language2, Subject subject, Integer level, @RequestHeader(name = "Authorization") String token){
         List<List<String>> question = new ArrayList<>();
         question.add(Arrays.asList("교실", "classroom"));
         question.add(Arrays.asList("책상", "desk"));
@@ -143,7 +144,7 @@ public class TestController {
 
     @PostMapping("/stroop/end/{gameId}")
     @ApiOperation(value = "Stroop 게임 완료")
-    public ResponseEntity createStroopPlayData(@PathVariable Long gameId, @RequestBody List<PlayRequest> request){
+    public ResponseEntity createStroopPlayData(@PathVariable Long gameId, @RequestBody List<PlayRequest> request, @RequestHeader(name = "Authorization") String token){
 
         ResponseMessage responseMessage = new ResponseMessage("게임이 완료되었습니다.", 200, request);
         return new ResponseEntity(responseMessage, HttpStatus.OK);
@@ -151,7 +152,7 @@ public class TestController {
 
     @GetMapping("/stroop/end/{gameId}")
     @ApiOperation(value = "Stroop 게임 종료")
-    public ResponseEntity getStroopResult(@PathVariable Long gameId){
+    public ResponseEntity getStroopResult(@PathVariable Long gameId, @RequestHeader(name = "Authorization") String token){
 
         List<MyRankResponse> rankResponses = new ArrayList<>();
         rankResponses.add(new MyRankResponse(97, 102L));
@@ -176,8 +177,23 @@ public class TestController {
     @GetMapping("/user/playdata")
     public ResponseEntity getUserPlayData(@RequestHeader(name = "Authorization") String token){
         UserPlayDataResponse response = new UserPlayDataResponse("test123", 4, 103, 14, 31, 0);
-        ResponseMessage responseMessage = new ResponseMessage("유저 정보 반환", 200, response);
+        ResponseMessage responseMessage = new ResponseMessage("유저 게임 플레이 정보 반환", 200, response);
         return new ResponseEntity(responseMessage, HttpStatus.OK);
     }
 
+    @GetMapping("/user/language")
+    public ResponseEntity getUserLanguage(@RequestHeader(name = "Authorization") String token){
+        UserLanguageResponse response = new UserLanguageResponse(Language.KOR.getInput());
+
+        ResponseMessage responseMessage = new ResponseMessage("유저 모국어 반환", 200, response);
+        return new ResponseEntity(responseMessage, HttpStatus.OK);
+    }
+
+    @GetMapping("/user/subject")
+    public ResponseEntity getUserSubject(@RequestHeader(name = "Authorization") String token){
+        UserSubjectResponse response = new UserSubjectResponse("test123", 2, 102, 98, 4);
+
+        ResponseMessage responseMessage = new ResponseMessage("유저 주제 플레이 정보 반환", 200, response);
+        return new ResponseEntity(responseMessage, HttpStatus.OK);
+    }
 }

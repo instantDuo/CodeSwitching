@@ -3,7 +3,9 @@ package com.instantduo.codeswitching.common.type;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.instantduo.codeswitching.common.exception.CustomException;
 import com.instantduo.codeswitching.common.exception.ErrorCode;
+import lombok.Getter;
 
+@Getter
 public enum Language {
     KOR("kor","한국어"),
     ENG("eng","영어"),
