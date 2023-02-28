@@ -7,11 +7,10 @@ import com.instantduo.codeswitching.common.exception.ErrorCode;
 import com.instantduo.codeswitching.common.security.UserDetailsImpl;
 import com.instantduo.codeswitching.dto.request.LoginRequest;
 import com.instantduo.codeswitching.dto.request.SignupRequest;
-import com.instantduo.codeswitching.dto.response.UserGamePlayResponse;
-import com.instantduo.codeswitching.dto.response.UserSubjectPlayResponse;
+import com.instantduo.codeswitching.dto.response.UserGamePlayDataResponse;
+import com.instantduo.codeswitching.dto.response.UserSubjectPlayDataResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.util.Pair;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -23,7 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -53,25 +51,25 @@ public class UserController {
 
     }
 
-    @GetMapping("/playdata")
-    public ResponseEntity<ResponseMessage<UserGamePlayResponse>> getGameCount(@AuthenticationPrincipal UserDetailsImpl userDetails){
+    @GetMapping("/game")
+    public ResponseEntity<ResponseMessage<UserGamePlayDataResponse>> getGameCount(@AuthenticationPrincipal UserDetailsImpl userDetails){
         User user = userDetails.getUser();
 
-        UserGamePlayResponse userGamePlayResponse = userService.getGamePlayData(user);
+        UserGamePlayDataResponse userGamePlayDataResponse = userService.getGamePlayData(user);
 
-        ResponseMessage<UserGamePlayResponse> message = new ResponseMessage<>("반환이 완료되었습니다.", 200, userGamePlayResponse);
+        ResponseMessage<UserGamePlayDataResponse> message = new ResponseMessage<>("반환이 완료되었습니다.", 200, userGamePlayDataResponse);
         return new ResponseEntity<>(message, HttpStatus.valueOf(message.getStatusCode()));
     }
 
     @GetMapping("/subject")
-    public ResponseEntity<ResponseMessage<UserSubjectPlayResponse>> getSubjectCount(@AuthenticationPrincipal UserDetailsImpl userDetails){
+    public ResponseEntity<ResponseMessage<UserSubjectPlayDataResponse>> getSubjectCount(@AuthenticationPrincipal UserDetailsImpl userDetails){
         User user = userDetails.getUser();
         if(user == null){
             throw new CustomException(ErrorCode.NOT_LOGIN);
         }
-        UserSubjectPlayResponse userSubjectPlayResponse = userService.getSubjectPlayData(user);
+        UserSubjectPlayDataResponse userSubjectPlayDataResponse = userService.getSubjectPlayData(user);
 
-        ResponseMessage<UserSubjectPlayResponse> message = new ResponseMessage<>("반환이 완료되었습니다.", 200, userSubjectPlayResponse);
+        ResponseMessage<UserSubjectPlayDataResponse> message = new ResponseMessage<>("반환이 완료되었습니다.", 200, userSubjectPlayDataResponse);
         return new ResponseEntity<>(message, HttpStatus.valueOf(message.getStatusCode()));
     }
 

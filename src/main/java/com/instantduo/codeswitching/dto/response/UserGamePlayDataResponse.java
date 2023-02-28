@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserGamePlayResponse {
+public class UserGamePlayDataResponse {
     private String loginId;
     private Integer nBackCount;
     private Integer stroopCount;

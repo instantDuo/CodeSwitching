@@ -7,8 +7,8 @@ import com.instantduo.codeswitching.common.type.Game;
 import com.instantduo.codeswitching.common.type.Subject;
 import com.instantduo.codeswitching.dto.request.LoginRequest;
 import com.instantduo.codeswitching.dto.request.SignupRequest;
-import com.instantduo.codeswitching.dto.response.UserGamePlayResponse;
-import com.instantduo.codeswitching.dto.response.UserSubjectPlayResponse;
+import com.instantduo.codeswitching.dto.response.UserGamePlayDataResponse;
+import com.instantduo.codeswitching.dto.response.UserSubjectPlayDataResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.util.Pair;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -68,36 +68,36 @@ public class UserService {
         return Pair.of(JwtUtil.AUTHORIZATION_HEADER, token);
     }
 
-    public UserGamePlayResponse getGamePlayData(User user) {
+    public UserGamePlayDataResponse getGamePlayData(User user) {
         List<PlayData> playDataList =  playDataRepository.findAllByUser(user);
-        UserGamePlayResponse userGamePlayResponse = new UserGamePlayResponse(user.getLoginId(), 0, 0, 0, 0, 0);
+        UserGamePlayDataResponse userGamePlayDataResponse = new UserGamePlayDataResponse(user.getLoginId(), 0, 0, 0, 0, 0);
         for(PlayData playData : playDataList){
             switch (playData.getGame()){
-                case N_BACK -> userGamePlayResponse.increaseNBack(playData.getCount());
-                case STROOP -> userGamePlayResponse.increaseStroop(playData.getCount());
-                case SIMON -> userGamePlayResponse.increaseSimon(playData.getCount());
-                case COMPLEX -> userGamePlayResponse.increaseComplex(playData.getCount());
-                case MATCHING-> userGamePlayResponse.increaseMatching(playData.getCount());
+                case N_BACK -> userGamePlayDataResponse.increaseNBack(playData.getCount());
+                case STROOP -> userGamePlayDataResponse.increaseStroop(playData.getCount());
+                case SIMON -> userGamePlayDataResponse.increaseSimon(playData.getCount());
+                case COMPLEX -> userGamePlayDataResponse.increaseComplex(playData.getCount());
+                case MATCHING-> userGamePlayDataResponse.increaseMatching(playData.getCount());
             }
         }
 
-        return userGamePlayResponse;
+        return userGamePlayDataResponse;
 
     }
 
-    public UserSubjectPlayResponse getSubjectPlayData(User user) {
+    public UserSubjectPlayDataResponse getSubjectPlayData(User user) {
         List<PlayData> playDataList =  playDataRepository.findAllByUser(user);
-        UserSubjectPlayResponse userSubjectPlayResponse = new UserSubjectPlayResponse(user.getLoginId(), 0, 0, 0, 0);
+        UserSubjectPlayDataResponse userSubjectPlayDataResponse = new UserSubjectPlayDataResponse(user.getLoginId(), 0, 0, 0, 0);
         for(PlayData playData : playDataList){
             switch (playData.getSubject()){
-                case SCHOOL -> userSubjectPlayResponse.increaseSchool(playData.getCount());
-                case KITCHEN -> userSubjectPlayResponse.increaseKitchen(playData.getCount());
-                case SPORTS -> userSubjectPlayResponse.increaseSports(playData.getCount());
-                case JOB_FAIR -> userSubjectPlayResponse.increaseJobFair(playData.getCount());
+                case SCHOOL -> userSubjectPlayDataResponse.increaseSchool(playData.getCount());
+                case KITCHEN -> userSubjectPlayDataResponse.increaseKitchen(playData.getCount());
+                case SPORTS -> userSubjectPlayDataResponse.increaseSports(playData.getCount());
+                case JOB_FAIR -> userSubjectPlayDataResponse.increaseJobFair(playData.getCount());
             }
         }
 
-        return userSubjectPlayResponse;
+        return userSubjectPlayDataResponse;
 
 
     }

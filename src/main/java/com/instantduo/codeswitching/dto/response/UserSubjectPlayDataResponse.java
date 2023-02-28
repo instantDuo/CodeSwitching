@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class UserSubjectPlayResponse {
+public class UserSubjectPlayDataResponse {
     private String loginId;
     private Integer schoolCount;
     private Integer kitchenCount;
