@@ -1,8 +1,11 @@
 package com.instantduo.codeswitching.common.type;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.instantduo.codeswitching.common.exception.CustomException;
 import com.instantduo.codeswitching.common.exception.ErrorCode;
+import lombok.Getter;
+
 
 public enum Language {
     KOR("kor","한국어"),
@@ -11,6 +14,7 @@ public enum Language {
     DUE("due","독일어"),
     CHN("chn","중국어");
 
+    @JsonValue
     final String input;
     final String korStr;
 

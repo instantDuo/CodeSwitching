@@ -5,9 +5,11 @@ import com.instantduo.codeswitching.common.ResponseMessage;
 import com.instantduo.codeswitching.common.exception.CustomException;
 import com.instantduo.codeswitching.common.exception.ErrorCode;
 import com.instantduo.codeswitching.common.security.UserDetailsImpl;
+import com.instantduo.codeswitching.common.type.Language;
 import com.instantduo.codeswitching.dto.request.LoginRequest;
 import com.instantduo.codeswitching.dto.request.SignupRequest;
 import com.instantduo.codeswitching.dto.response.UserGamePlayDataResponse;
+import com.instantduo.codeswitching.dto.response.UserLanguageResponse;
 import com.instantduo.codeswitching.dto.response.UserSubjectPlayDataResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.util.Pair;
@@ -70,6 +72,14 @@ public class UserController {
         UserSubjectPlayDataResponse userSubjectPlayDataResponse = userService.getSubjectPlayData(user);
 
         ResponseMessage<UserSubjectPlayDataResponse> message = new ResponseMessage<>("반환이 완료되었습니다.", 200, userSubjectPlayDataResponse);
+        return new ResponseEntity<>(message, HttpStatus.valueOf(message.getStatusCode()));
+    }
+
+    @GetMapping("/language")
+    public ResponseEntity<ResponseMessage<UserLanguageResponse>> getUserLanguage(@AuthenticationPrincipal UserDetailsImpl userDetails){
+        Language language = userDetails.getUser().getLanguage();
+        UserLanguageResponse userLanguageResponse = new UserLanguageResponse("kor");
+        ResponseMessage<UserLanguageResponse> message = new ResponseMessage<>("반환이 완료되었습니다.", 200, userLanguageResponse);
         return new ResponseEntity<>(message, HttpStatus.valueOf(message.getStatusCode()));
     }
 
