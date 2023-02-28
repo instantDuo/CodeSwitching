@@ -1,8 +1,12 @@
 package com.instantduo.codeswitching.user;
 
+import com.instantduo.codeswitching.PlayData.PlayData;
+import com.instantduo.codeswitching.PlayData.PlayDataRepository;
 import com.instantduo.codeswitching.common.exception.CustomException;
 import com.instantduo.codeswitching.common.exception.ErrorCode;
 import com.instantduo.codeswitching.common.jwt.JwtUtil;
+import com.instantduo.codeswitching.common.type.Game;
+import com.instantduo.codeswitching.common.type.Subject;
 import com.instantduo.codeswitching.dto.request.LoginRequest;
 import com.instantduo.codeswitching.dto.request.SignupRequest;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +25,8 @@ public class UserService {
 
     private final PasswordEncoder passwordEncoder;
 
+    private final PlayDataRepository playDataRepository;
+
     private final JwtUtil jwtUtil;
 
     public void signup(SignupRequest signupRequest) {
@@ -32,13 +38,21 @@ public class UserService {
             throw new CustomException(ErrorCode.NOT_MATCHING_PASSWORD);
         }
 
-        User user = new User(signupRequest.getLoginId(),
-                passwordEncoder.encode(signupRequest.getPassword()),
-                signupRequest.getGender(),
-                signupRequest.getAge(),
-                signupRequest.getLanguage(),
-                signupRequest.getGrade());
-        userRepository.save(user);
+        User user = userRepository.save(
+                new User(signupRequest.getLoginId(),
+                        passwordEncoder.encode(signupRequest.getPassword()),
+                        signupRequest.getGender(),
+                        signupRequest.getAge(),
+                        signupRequest.getLanguage(),
+                        signupRequest.getGrade()
+                )
+        );
+
+        for(Game game : Game.values()){
+            for(Subject subject : Subject.values()){
+                playDataRepository.save(new PlayData(subject, game, 0, user));
+            }
+        }
     }
 
     public Pair<String, String> login(LoginRequest loginRequest) {
